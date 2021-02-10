@@ -249,7 +249,7 @@ int playWithUser(char user1, char user2){
                 userVSuser[0]++;
                 printf("User1 wins");                
             }
-            return 0;
+            return 1;
         }
     }
     printf("The Game is Draw\n");  
