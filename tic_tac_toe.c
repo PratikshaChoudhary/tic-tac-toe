@@ -22,17 +22,16 @@ void initilize_board(){
 
 void print_board(){
 
-    printf("\n\n"); 
+    printf("\n"); 
       
-    printf("\t | %c | %c  | %c | \n", board[0][0], board[0][1], board[0][2]); 
-    printf("\t | %c | %c  | %c | \n", board[1][0], board[1][1], board[1][2]); 
-    printf("\t | %c | %c  | %c | \n\n", board[2][0], board[2][1], board[2][2]); 
+    printf("\t | %c | %c | %c | \n", board[0][0], board[0][1], board[0][2]); 
+    printf("\t | %c | %c | %c | \n", board[1][0], board[1][1], board[1][2]); 
+    printf("\t | %c | %c | %c | \n\n", board[2][0], board[2][1], board[2][2]); 
 } 
 
 void print_scorecard1(){
 
     printf("\n");
-    printf("Scorecard :\n");
     printf("\t\t| Computer | User |\n");
     printf("\t\t|   %d      |  %d   |\n\n",userVScomp[0],userVScomp[1]);
 }
@@ -40,7 +39,6 @@ void print_scorecard1(){
 void print_scorecard2(){
 
     printf("\n");
-    printf("Scorecard :\n");
     printf("\t\t| User1 | User2 |\n");
     printf("\t\t|   %d      |  %d   |\n\n",userVSuser[0],userVSuser[1]);
 }
@@ -75,7 +73,7 @@ return 0;
 }
 
 
-char *comp_turn(int comp,int i){
+char comp_turn(int comp,int i){
     int r, c;
     printf("\nComputer's move :");
     again:
@@ -96,7 +94,7 @@ char *comp_turn(int comp,int i){
 }
 
 
-char *user_turn(int user, int i, int choice){
+char user_turn(int user, int i, int choice){
     char str[11];
     int r, c;
 
@@ -117,11 +115,11 @@ char *user_turn(int user, int i, int choice){
                 }
             }
             else  if(r > 2 || c > 2 || r < 0 || c < 0){
-                printf("Invalid Move \n");
+                printf("Invalid Move \n\n");
                 goto again;
             }
             else{
-                printf("Invalid move, place already taken\n");
+                printf("Invalid move, place already taken\n\n");
                 goto again;
             }
             break;
@@ -129,6 +127,7 @@ char *user_turn(int user, int i, int choice){
                 return 'q';
         break;
         case 's': 
+            printf("\nScorecard :");
             if(choice == 1)
                 print_scorecard1();
             else
@@ -140,7 +139,7 @@ char *user_turn(int user, int i, int choice){
 }
 
 
-int playWithComp(char user, char comp){
+void playWithComp(char user, char comp){
   
     char status =' ';
 
@@ -160,33 +159,34 @@ int playWithComp(char user, char comp){
         if(status == 's') {
             goto repeat;
         }
-        printf("\n");
+
         print_board();
+
         if(status == 'u'){
             userVScomp[1]++;
             printf("User wins");
-            return 0;
+            return ;
         }
         else if(status == 'c'){
             userVScomp[0]++;
             printf("Computer Wins");
-            return 0;
+            return ;
         }
         else if(status == 'q'){
-            userVScomp[o]++;
+            userVScomp[0]++;
+            printf("\n\nUser Exit the Game\n");
             printf("Computer Wins");
-            return 1;  
+            return ;  
         }
     }
     printf("The Game is Draw\n");  
-    return 0;   
+    return ;   
 }
 
-int playWithUser(char user1, char user2){
+void playWithUser(char user1, char user2){
   
     char status =' ';
     int user = 0;
-    print_board();
 
     for(int i = 1; i <= 9; i++){
         repeat:
@@ -217,8 +217,10 @@ int playWithUser(char user1, char user2){
         if(status == 's') {
             goto repeat;
         }
+
         printf("\n");
         print_board();
+        
         if(status == 'u'){
             if(user == 1){
                 userVSuser[0]++;
@@ -228,7 +230,7 @@ int playWithUser(char user1, char user2){
                 userVSuser[1]++;
                 printf("User2 wins");                
             }
-            return 0;
+            return ;
         }
         else if(status == 'c'){
             if(user == 2){
@@ -240,22 +242,24 @@ int playWithUser(char user1, char user2){
                 printf("User1 wins");                
 
             }
-            return 0;
+            return ;
         }
         else if(status == 'q'){
             if(user == 1){
                 userVSuser[1]++;
+                printf("\n\nUser1 Exit the Game\n");
                 printf("User2 wins");
             }
             else{
                 userVSuser[0]++;
+                printf("\n\nUser2 Exit the Game\n");
                 printf("User1 wins");                
             }
-            return 1;
+            return ;
         }
     }
     printf("The Game is Draw\n");  
-    return 0;   
+    return ;   
 }
 
 int main(){
@@ -271,9 +275,10 @@ int main(){
 
     while(c != 'e'){
         
-        printf("\n\n______________\n\n");
-        printf("New Game :\n");
-        printf("______________\n\n");
+        //printf("\n\n\t\t\t______________\n\n");
+        printf("\n\n");
+        printf("\t\t\t\t\t\t   New Game :\n");
+        printf("\t\t\t\t\t\t______________\n\n");
 
         printf(" press 1 to play With Computer\n press 2 to Play With human\n Enter Your choice: ");
         scanf("%d",&choice);
@@ -282,35 +287,37 @@ int main(){
         user2 = (user1 == 'X' ? 'O' : 'X');
 
         initilize_board();
-        
+    
         if(choice == 1){
-            printf("\t\t\tGame b/w Human and Computer\n\n");
-            if( playWithComp(user1, user2) == 1){
-                printf("\n\nUser Exit the Game");
-                printf("\n\nScorecard After %d  match:\n",noOfMatches1);
-                print_scorecard1();
-               break;
-            }
+            printf("\t\t\t\tGame b/w Human and Computer\n\n");
+            printf("User Move      :   %c\n",user1);
+            printf("computer Move  :   %c\n\n",user2);
+            printf("Initial board: ");
+
+            print_board();
+            playWithComp(user1, user2);
 
             printf("\n\nScorecard After %d  match:\n",noOfMatches1);
             print_scorecard1();
+            
             noOfMatches1++;
         }
         else{
-            printf("\t\t\tGame b/w Human and Human\n\n");
-            if( playWithUser(user1, user2) == 1){
-                printf("\n\nUser Exit the Game");
-                printf("\n\nScorecard After %d  match:\n",noOfMatches2);
-                print_scorecard2();
-               break;
-            }
-
+            printf("\t\t\t\tGame b/w Human and Human\n\n");
+            printf("User1 Move      :   %c\n",user1);
+            printf("User2 Move      :   %c\n\n",user2);
+            printf("Initial board: ");
+            
+            print_board();
+            playWithUser(user1, user2);
+            
             printf("\n\nScorecard After %d  match:\n",noOfMatches2);
             print_scorecard2();
+            
             noOfMatches2++;
         }
                        
-        printf("\nPress any key execpt 'e' to play New Game or 'e' to Exit:");
+        printf("\nPress 'n' to play new game or 'e' to exit: ");
         scanf("\n");
         scanf("%c",&c);
     }
