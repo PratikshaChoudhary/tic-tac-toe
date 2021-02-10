@@ -126,9 +126,6 @@ char *user_turn(int user, int i, int choice){
             }
             break;
         case 'q':
-            if(choice == 1)
-                return 'c';
-            else
                 return 'q';
         break;
         case 's': 
@@ -174,6 +171,11 @@ int playWithComp(char user, char comp){
             userVScomp[0]++;
             printf("Computer Wins");
             return 0;
+        }
+        else if(status == 'q'){
+            userVScomp[o]++;
+            printf("Computer Wins");
+            return 1;  
         }
     }
     printf("The Game is Draw\n");  
@@ -284,7 +286,7 @@ int main(){
         if(choice == 1){
             printf("\t\t\tGame b/w Human and Computer\n\n");
             if( playWithComp(user1, user2) == 1){
-                printf("\nUser Exit the Game");
+                printf("\n\nUser Exit the Game");
                 printf("\n\nScorecard After %d  match:\n",noOfMatches1);
                 print_scorecard1();
                break;
@@ -297,7 +299,7 @@ int main(){
         else{
             printf("\t\t\tGame b/w Human and Human\n\n");
             if( playWithUser(user1, user2) == 1){
-                printf("\nUser Exit the Game");
+                printf("\n\nUser Exit the Game");
                 printf("\n\nScorecard After %d  match:\n",noOfMatches2);
                 print_scorecard2();
                break;
