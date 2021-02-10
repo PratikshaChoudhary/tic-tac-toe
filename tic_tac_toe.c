@@ -184,6 +184,7 @@ int playWithUser(char user1, char user2){
   
     char status =' ';
     int user = 0;
+    print_board();
 
     for(int i = 1; i <= 9; i++){
         repeat:
@@ -307,7 +308,7 @@ int main(){
             noOfMatches2++;
         }
                        
-        printf("\nPress any kew execpt 'e' to play New Game or 'e' to Exit:");
+        printf("\nPress any key execpt 'e' to play New Game or 'e' to Exit:");
         scanf("\n");
         scanf("%c",&c);
     }
